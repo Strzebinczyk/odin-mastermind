@@ -7,15 +7,27 @@ class Game
     @won = false
   end
 
-  def take_input
-    puts 'Please enter your guess'
-    guess = gets.chomp.downcase
-    guess = guess.split(', ')
-    until valid?(guess)
-      puts 'Please enter a valid guess'
-      guess = gets.chomp.downcase
+  def take_choice
+    puts 'Please choose if you want to guess or create the code.'
+    puts 'Write \'guess\' or \'create\''
+    choice = gets.chomp.downcase
+    until %w[guess create].include?(choice)
+      puts 'Please enter a valid choice'
+      choice = gets.chomp.downcase
     end
-    guess
+    choice
+  end
+
+  def take_code
+    puts 'Please enter a code'
+    code = gets.chomp.downcase
+    code = code.split(', ')
+    until valid?(code)
+      puts 'Please enter a valid code'
+      code = gets.chomp.downcase
+      code = code.split(', ')
+    end
+    code
   end
 
   def valid?(guess)
