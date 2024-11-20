@@ -1,5 +1,3 @@
-require_relative 'game'
-
 class Game
   attr_reader :won, :code
 
@@ -12,6 +10,7 @@ class Game
   def take_input
     puts 'Please enter your guess'
     guess = gets.chomp.downcase
+    guess = guess.split(', ')
     until valid?(guess)
       puts 'Please enter a valid guess'
       guess = gets.chomp.downcase
@@ -19,18 +18,12 @@ class Game
     guess
   end
 
-  def process_guess(guess)
-    guess.split(', ')
-  end
-
   def valid?(guess)
-    guess = process_guess(guess)
     guess.all? { |element| @colors.include?(element) } && guess.length == 4
   end
 
   def feedback(guess)
     result = []
-    guess = process_guess(guess)
     code = @code.dup
     guess.each_with_index do |color, index|
       if color == code[index]
@@ -50,7 +43,7 @@ class Game
   end
 
   def win?(guess)
-    return false unless process_guess(guess) == @code
+    return false unless guess == @code
 
     @won = true
     true
